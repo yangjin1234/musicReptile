@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>音乐搜索大全</title>
+</head>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<style>
+	table{
+		margin: 0 auto;
+		text-align: center;
+		width: 60%;
+		border-collapse:collapse;
+		border: 3px solid #EE82EE;
+	}
+	tr,td,th{
+		border: 3px solid #EE82EE;
+	}
+	.source{
+		background-color: #F0F0F0;
+	}
+	input{
+		height: 30px;
+		border: 2px solid #CDCDC1;
+	}
+	button{
+		height: 28px;
+	}
+	
+	.background { 
+    display: block; 
+    width: 100%; 
+    height: 100%; 
+    opacity: 0.4; 
+    filter: alpha(opacity=40); 
+    background:while; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    z-index: 2000; 
+	} 
+	.progressBar { 
+	    border: solid 2px #86A5AD; 
+	    background: white url(progressBar_m.gif) no-repeat 10px 10px; 
+	} 
+	.progressBar { 
+	    display: block; 
+	    width: 160px; 
+	    height: 28px; 
+	    position: fixed; 
+	    top: 50%; 
+	    left: 50%; 
+	    margin-left: -74px; 
+	    margin-top: -14px; 
+	    padding: 10px 10px 10px 50px; 
+	    text-align: left; 
+	    line-height: 27px; 
+	    font-weight: bold; 
+	    position: absolute; 
+	    z-index: 2001; 
+	} 
+</style>
+<body>
+	<div id="background" class="background" style="display: none; "></div> 
+	<div id="progressBar" class="progressBar" style="display: none; ">数据加载中，请稍等...</div>
+	<table>
+		<caption></caption>
+		<thead>
+			<tr>
+				<th colspan="6">
+					<input type="text" id="count" name="count" placeholder="请输入每页显示数（默认5）" size="25"/>&nbsp;&nbsp;
+					<input type="text" id="name" name="name" placeholder="请输入歌名、歌手、专辑" size="25"/>&nbsp;&nbsp;
+					<button id="search" onclick="search(1);">搜索</button>
+				</th>
+			</tr>
+			<tr>
+				<th>歌曲编号</th>
+				<th>歌曲名称</th>
+				<th>专辑名称</th>
+				<th>歌手名称</th>
+				<th>试听并下载</th>
+				<th>歌词下载</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+		</tbody>
+		<tfoot>
+			
+		</tfoot>
+	</table>
+</body>
+<script type="text/javascript">
+
+	function downLrc(source, lyric_id, artist, name){
+		$.ajax({
+			type:"GET",
+			url:"musicServlet",
+			data:{
+				"source":source,
+				"lyric_id":lyric_id,
+				"artist":artist,
+				"name":name,
+				"method":"downLrc"
+			},
+			success:function(data){
+				
+			}
+		});
+	}
+
+	function downMusic(source, song_id){
+		ajaxbg.show(); 
+		$.ajax({
+			type:"GET",
+			url:"musicServlet",
+			data:{
+				"source":source,
+				"song_id":song_id,
+				"method":"downMusic"
+			},
+			success:function(data){
+				console.log(data);
+				if(data != null && data != ''){
+					//window.open(data);
+					var open = window.open('about:blank');
+					
+					if (open === null || typeof(open) === 'undefined') {
+					  window.location.href = data;
+					  return;
+					};
+					
+					setTimeout(() => {
+					  open.location = data
+					}, 100);
+					ajaxbg.hide();
+				} else {
+					alert("不好意思，资源不存在哦~");
+					ajaxbg.hide();
+				}
+			}
+		});
+	}
+
+
+	var ajaxbg = $("#background,#progressBar");
+	
+	function checkSource(source){
+		var name = '';
+		if (source == 'netease') {
+			name = 'netease[网易云音乐]';
+		} else if (source == 'tencent') {
+			name = 'tencent[qq音乐]';
+		} else if (source == 'kugou') {
+			name = 'kugou[酷狗音乐]';
+		} else if (source == 'baidu') {
+			name = 'baidu[百度音乐]';
+		} else if (source == 'xiami') {
+			name = 'xiami[虾米音乐]';
+		} else if (source == 'kuwo') {
+			name = 'kuwo[酷我音乐]';
+		}
+		return name;
+	}
+	
+	$(function(){
+		/* $("#search").click(function(){
+			
+		}); */
+	});
+	
+	function search(pagesp){
+		//console.log($("#name").val());
+		//console.log($("#count").val());
+		
+		if(pagesp == undefined || pagesp == 'undefined'){
+			pagesp = 1;
+		}
+		$.ajax({
+			type:"GET",
+			url:"musicServlet",
+			data:{
+				"name":$("#name").val(),
+				"count":$("#count").val(),
+				"pages":pagesp
+			},
+			dataType:"json",
+			beforeSend:function() {  
+                ajaxbg.show(); 
+            },
+			success:function(data){
+				ajaxbg.hide();
+				//console.log(data);
+				var songs = data.songs;
+				var strs = '';
+				$.each(songs, function(idx,obj) {
+					//第一行
+					strs += '<tr class="source">';
+					strs += '<td colspan="6">'+checkSource(idx)+'</td>';
+					strs += '</tr>';
+					//console.log(idx);
+					//console.log(obj);
+					//console.log(strs);
+					$.each(obj, function(idx2, obj2){
+						//console.log(obj2.source);
+						strs += '<tr>';
+						strs += '<td>'+(idx2+1)+'</td>';
+						strs += '<td>'+obj2.name+'</td>';
+						strs += '<td>'+obj2.album+'</td>';
+						var artist = obj2.artist.replace(/[\[\]\"]/g, "");
+						strs += '<td>'+artist+'</td>';
+						/* if(obj2.song_url != null && obj2.song_url != ''){
+							strs += '<td><audio src="'+obj2.song_url+'" controls="true"></audio></td>';
+						} else {
+							strs += '<td>资源无法下载</td>';
+						} */
+						strs += '<td><a href="javascript:downMusic(\''+idx+'\',\''+obj2.song_id+'\')">下载</a></td>';
+						//strs += '<td><a href="javascript:downLrc(\''+idx+'\',\''+obj2.lyric_id+'\',\''+artist+'\',\''+obj2.name+'\')">歌词</a></td>';
+						strs += '<td><a target="_blank" href="musicServlet?method=downLrc&source='+idx+'&lyric_id='+obj2.lyric_id+'&artist='+artist+'&name='+obj2.name+'&song_id='+obj2.song_id+'">歌词</a></td>';
+						strs += '</tr>';
+					});
+				}); 
+				var strs2 = '<tr><td colspan="6">';
+				var pages = data.pages;
+				if(parseInt(pages) <= 1){
+					strs2 += '上一页&nbsp;&nbsp;&nbsp;&nbsp;';
+				} else {
+					strs2 += '<a href="javascript:search('+(parseInt(pages) - 1)+')">上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+				}
+				
+				strs2 += '当前已经到了第【&nbsp;&nbsp;';
+				for(var i = 0; i < parseInt(pages); i++){
+					if ((i + 1) == parseInt(pages)) {
+						strs2 += (i + 1)+"&nbsp;&nbsp;";
+					} else {
+						strs2 += '<a href="javascript:search('+(i + 1)+')">'+(i + 1)+'</a>&nbsp;&nbsp;';
+					}
+				}
+				strs2 += '】页&nbsp;&nbsp;&nbsp;&nbsp;';
+				
+				strs2 += '<a href="javascript:search('+(parseInt(pages) + 1)+')">下一页</a>';
+				strs2 += '</td></tr>';
+				//console.log(data.pages);
+				$("table tbody").html(strs);
+				$("table tfoot").html(strs2);
+			}
+		});
+	}
+</script>
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>音乐搜索大全</title>
+		<meta name="description" content="Restyling jQuery UI Widgets and Elements" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="assets/css/ace-fonts.css" />
+		<link rel="stylesheet" href="assets/css/ace.min.css" id="main-ace-style" />
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+		<script src="assets/js/ace-extra.min.js"></script>
+		<!--[if lte IE 8]>
+		<script src="assets/js/html5shiv.min.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
+		<style type="text/css">
+			.background { 
+			display: block; 
+			width: 100%; 
+			height: 100%; 
+			opacity: 0.4; 
+			filter: alpha(opacity=40); 
+			background:while; 
+			position: absolute; 
+			top: 0; 
+			left: 0; 
+			z-index: 2000; 
+			} 
+			.progressBar { 
+			    border: solid 2px #86A5AD; 
+			    background: white url(progressBar_m.gif) no-repeat 10px 10px; 
+			} 
+			.progressBar { 
+			    display: block; 
+			    width: 220px; 
+			    height: 50px; 
+			    position: fixed; 
+			    top: 50%; 
+			    left: 50%; 
+			    margin-left: -74px; 
+			    margin-top: -14px; 
+			    padding: 10px 10px 10px 50px; 
+			    text-align: left; 
+			    line-height: 27px; 
+			    font-weight: bold; 
+			    position: absolute; 
+			    z-index: 2001; 
+			} 
+		</style>
+	</head>
+
+	<body class="no-skin">
+		<div id="background" class="background" style="display: none; "></div> 
+		<div id="progressBar" class="progressBar" style="display: none; ">数据加载中，请稍等...</div>
+		<!-- #section:basics/navbar.layout -->
+		<div id="navbar" class="navbar navbar-default">
+
+			<div class="navbar-container" id="navbar-container">
+				<!-- <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+				</button> -->
+
+				<div class="navbar-header pull-left">
+					<a href="index2.html" class="navbar-brand">
+						<small>
+							<img src="assets/avatars/logo_23.png" alt="" />
+						</small>
+					</a>
+				</div>
+
+				<!-- #section:basics/navbar.dropdown -->
+				<!-- <div class="navbar-buttons navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="assets/avatars/profile-pic.jpg" alt="lpm's Photo" />
+								<span class="user-info">
+									欢迎您<br />
+									lpm
+								</span>
+								<i class="ace-icon fa fa-caret-down"></i>
+							</a>
+
+							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<a href="error-404.html">
+										<i class="ace-icon fa fa-cog"></i>
+										系统设置
+									</a>
+								</li>
+
+								<li>
+									<a href="error-404.html">
+										<i class="ace-icon fa fa-user"></i>
+										个人信息设置
+									</a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li>
+									<a href="error-404.html">
+										<i class="ace-icon fa fa-power-off"></i>
+										登出
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div> -->
+
+				<!-- /section:basics/navbar.dropdown -->
+			</div><!-- /.navbar-container -->
+		</div>
+
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container" id="main-container">
+
+			<!-- #section:basics/sidebar -->
+			 <div id="sidebar" class="sidebar responsive">
+
+				<ul class="nav nav-list">
+					<li class="active">
+						<a href="index2.html">
+							<i class="menu-icon fa fa-tachometer"></i>
+							<span class="menu-text"> 总菜单 </span>
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+
+					<li class="">
+						<a href="index2.html" class="dropdown-toggle">
+							<i class="menu-icon fa fa-headphones"></i>
+							<span class="menu-text"> 音乐 </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+
+							<li class="">
+								<a href="index2.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									音乐搜索
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+					<li class="">
+						<a href="error-404.html" class="dropdown-toggle">
+							<i class="menu-icon fa fa-cog"></i>
+
+							<span class="menu-text">
+								系统设置
+							</span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="">
+								<a href="error-404.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									账号管理
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="error-404.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									个人信息
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+				</ul>
+
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+
+			</div> 
+
+
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon"></i>
+							<a href="index2.html">首页</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)">音乐搜索</a>
+						</li>
+					</ul><!-- /.breadcrumb -->
+
+					<!-- #section:basics/content.searchbox -->
+					<!-- <div class="nav-search" id="nav-search">
+						<form class="form-search">
+							<span class="input-icon">
+								<input type="text" placeholder="请输入关键字 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+								<i class="ace-icon fa fa-search nav-search-icon"></i>
+							</span>
+						</form>
+					</div> --><!-- /.nav-search -->
+				</div>
+				<div class="page-content">
+
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<div class="col-xs-12">
+
+										<div class="table-header">
+											音乐搜索管理
+										</div>
+										<table id="sample-table-1" border="0" class="table table-striped table-bordered table-hover">
+											<thead>
+												<tr>
+													<th style="text-align: right;"><span class="hidden-xs">请输入歌曲搜索</span>条件：</th>
+													<td><input type="text" id="name" name="name"size="15" placeholder="歌名、歌手、专辑 ..." /></td>
+													<th style="text-align: right;"><span class="hidden-xs">请选择每页显示</span>数量：</th>
+													<td>
+														<select id="count" name="count">
+															<option>5</option>
+															<option selected="selected" value="10">10</option>
+															<option value="15">15</option>
+															<option value="20">20</option>
+															<option value="25">25</option>
+															<option value="30">30</option>
+															<option value="50">50</option>
+															<option value="100">100</option>
+															<option value="200">200</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="4">
+														<button style="width: 100%;" onclick="search(1);" class="btn btn-primary pull col-sm-12 tbl-search" data-dismiss="modal">
+															开始搜索 
+															<i class="ace-icon fa fa-search"></i>
+														</button>
+													</td>
+												</tr>
+											</thead>
+										</table>
+										<table id="sample-table-2" style="text-align: center;" class="table table-striped table-bordered table-hover">
+											<thead>
+												
+											</thead>
+
+											<tbody>
+												
+											</tbody>
+										</table>
+										<div class="modal-footer no-margin-top" style="display: none;">
+												
+										</div>
+									</div>
+								</div>
+								</div><!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+			<div class="footer">
+				<div class="footer-inner">
+					<!-- #section:basics/footer -->
+					<div class="footer-content">
+						<span class="bigger-120">
+							 果果音乐搜索大全 &copy; 2019
+						</span>
+					</div>
+
+					<!-- /section:basics/footer -->
+				</div>
+			</div>
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+		<script type="text/javascript">
+		 window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>"+"<"+"/script>");
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="assets/js/bootstrap.min.js"></script>
+
+		<script src="assets/js/jquery.dataTables.min.js"></script>
+		<script src="assets/js/jquery.dataTables.bootstrap.js"></script>
+
+		<!-- ace scripts -->
+		<script src="assets/js/ace-elements.min.js"></script>
+		<script src="assets/js/ace.min.js"></script>
+
+		<script type="text/javascript">
+			jQuery(function($) {
+				
+			});
+			
+			//下载歌词
+			function downLrc(source, lyric_id, artist, name, song_id){
+				//通过后台下载歌词
+				var open = window.open('about:blank');
+				var url = 'musicServlet?method=downLrc&source='+source+'&lyric_id='+lyric_id+'&artist='+artist+'&name='+name+'&song_id='+song_id+'';
+				open.location = url;
+				/* if (open === null || typeof(open) === 'undefined') {
+				  window.location.href = url;
+				  return;
+				}; */
+				
+				/* setTimeout(() => {
+				  open.location = url
+				}, 100); */
+				//window.location.href = 'musicServlet?method=downLrc&source='+source+'&lyric_id='+lyric_id+'&artist='+artist+'&name='+name+'&song_id='+song_id+'';
+				/* $.ajax({
+					type:"GET",
+					url:"musicServlet",
+					data:{
+						"source":source,
+						"lyric_id":lyric_id,
+						"artist":artist,
+						"name":name,
+						"method":"downLrc"
+					},
+					success:function(data){
+						
+					}
+				}); */
+			}
+			
+			//下载音乐
+			function downMusic(source, song_id){
+				//打开新页面，然后通过后台进行转发。js打开会被手机端拦截
+				var open = window.open('about:blank');
+				var url = 'musicServlet?method=downMusic&source='+source+'&song_id='+song_id+'';
+				open.location = url;
+				/* $.ajax({
+					type:"GET",
+					url:"musicServlet",
+					data:{
+						"source":source,
+						"song_id":song_id,
+						"method":"downMusic"
+					},
+					success:function(data){
+						//console.log(data);
+						if(data != null && data != ''){
+							ajaxbg.hide();
+							//window.open(data);//打开新页面,但是会被拦截,不好用
+							//window.location.href = data;
+							//var open = window.open('about:blank');
+							//通过ajaxopen页面会被各大浏览器拦截
+							if (open === null || typeof(open) === 'undefined') {
+							  window.location.href = data;
+							  return;
+							}; 
+						
+							setTimeout(() => {
+							  open.location = data
+							}, 100); 
+						} else {
+							alert("不好意思，资源不存在哦~");
+							ajaxbg.hide();
+						}
+					}
+				}); */
+			}
+			
+			
+			var ajaxbg = $("#background,#progressBar");
+			
+			function checkSource(source){
+				var name = '';
+				if (source == 'netease') {
+					name = 'netease[网易云音乐]';
+				} else if (source == 'tencent') {
+					name = 'tencent[qq音乐]';
+				} else if (source == 'kugou') {
+					name = 'kugou[酷狗音乐]';
+				} else if (source == 'baidu') {
+					name = 'baidu[百度音乐]';
+				} else if (source == 'xiami') {
+					name = 'xiami[虾米音乐]';
+				} else if (source == 'kuwo') {
+					name = 'kuwo[酷我音乐]';
+				}
+				return name;
+			}
+			
+			//随机生成颜色代码
+			function getRandomColor(){ 
+			  return '#'+Math.floor(Math.random()*16777215).toString(16); 
+			}
+			
+			function search(pagesp){
+				//console.log($("#name").val());
+				//console.log($("#count").val());
+				
+				if($("#name").val() == '' || $("#name").val() == 'undefined'){
+					alert("请填写搜索关键字！");
+					return false;
+				}
+				
+				if(pagesp == undefined || pagesp == 'undefined'){
+					pagesp = 1;
+				}
+				$.ajax({
+					type:"GET",
+					url:"musicServlet",
+					data:{
+						"name":$("#name").val(),
+						"count":$("#count").val(),
+						"pages":pagesp
+					},
+					dataType:"json",
+					beforeSend:function() {  
+			            ajaxbg.show(); 
+			        },
+					success:function(data){
+						//拼接表头
+						var strs_head = '<tr><th class="center hidden-xs">';
+						strs_head += '<label class="position-relative">';
+						strs_head += '<input type="checkbox" class="ace" />';
+						strs_head += '<span class="lbl"></span></label></th>';
+						strs_head += '<th class="center hidden-xs">歌曲序号</th>';
+						strs_head += '<th class="center">歌曲<span class="hidden-xs">名称</span></th>';
+						strs_head += '<th class="center hidden-xs">专辑名称</th>';
+						strs_head += '<th class="center">歌手<span class="hidden-xs">名称</span></th>';
+						strs_head += '<th class="center">试听<span class="hidden-xs">下载</span></th>';
+						strs_head += '<th class="center">歌词<span class="hidden-xs">下载</span></th></tr>';
+						
+						ajaxbg.hide();//隐藏加载框
+						//console.log(data);
+						var songs = data.songs;
+						//拼接表体
+						var strs_body = '';
+						$.each(songs, function(idx,obj) {
+							//console.log(getRandomColor());
+							//每个表格的第一行
+							strs_body += '<tr><td colspan="7"><div class="table-header" style="background-color: '+getRandomColor()+';">';
+							strs_body += checkSource(idx);
+							strs_body += '</div></td></tr>';
+							//console.log(idx);
+							//console.log(obj);
+							//console.log(strs);
+							$.each(obj, function(idx2, obj2){
+								//console.log(obj2.source);
+								strs_body += '<tr><td class="center hidden-xs">';
+								strs_body += '<label class="position-relative">';
+								strs_body += '<input type="checkbox" class="ace" />';
+								strs_body += '<span class="lbl"></span></label></td>';
+								strs_body += '<td class="hidden-xs">'+(idx2+1)+'</td>';
+								strs_body += '<td hspace="0" vspace="0"><img src='+obj2.pic_info+' high=50px width=50px >'+obj2.name+'</td>';
+								strs_body += '<td class="hidden-xs">'+obj2.album+'</td>';
+								//去除[]和双引号
+								var artist = obj2.artist.replace(/[\[\]\"]/g, "");
+								//顶多显示三个歌手
+								var artArr = artist.split("&",3);
+								//console.log(artArr);
+								var artist_show = '';
+								for (var i = 0; i < artArr.length; i++) {
+									artist_show += artArr[i] + "&";
+								}
+								artist_show = artist_show.substr(0, artist_show.length-1);
+								strs_body += '<td>'+artist_show+'</td>';
+								strs_body += '<td><button onclick = "downMusic(\''+idx+'\',\''+obj2.song_id+'\')" class="btn btn-white btn-default btn-round">';
+								strs_body += '<i class="ace-icon fa fa-headphones red2"></i><span class="hidden-xs">试听</span></button></td>';
+								//此方法是调用js函数
+								//strs_body += '<td><a href="javascript:downLrc(\''+idx+'\',\''+obj2.lyric_id+'\',\''+artist+'\',\''+obj2.name+'\')">歌词</a></td>';
+								strs_body += '<td><button onclick = "downLrc(\''+idx+'\',\''+obj2.lyric_id+'\',\''+artist+'\',\''+obj2.name+'\',\''+obj2.song_id+'\');" class="btn btn-white btn-info btn-bold">';
+								strs_body += '<i class="ace-icon fa fa-floppy-o bigger-120 blue"></i><span class="hidden-xs">保存</span></button></td></tr>';
+								
+								//由于每次把地址查询出来导致加载很慢，所以废弃这种方法
+								/* if(obj2.song_url != null && obj2.song_url != ''){
+									strs_body += '<td><audio src="'+obj2.song_url+'" controls="true"></audio></td>';
+								} else {
+									strs_body += '<td>资源无法下载</td>';
+								} */
+							});
+						}); 
+						
+						
+						//拼接分页部分
+						var pages = data.pages;//分页数据
+						pages = parseInt(pages);
+						var strs_pages = '';
+						strs_pages += '<ul class="pagination pull-right no-margin">';
+						if(pages <= 1){
+							strs_pages += '<li class="prev disabled">';
+							strs_pages += '<a><i class="ace-icon fa fa-angle-double-left"></i></a></li>';
+						} else {
+							strs_pages += '<li class="prev">';
+							strs_pages += '<a href = "javascript:search('+(pages - 1)+')"><i class="ace-icon fa fa-angle-double-left"></i></a></li>';
+						}
+						
+						for(var i = 0; i < pages; i++){
+							if ((i + 1) == pages) {//正好在当前页
+								strs_pages += '<li class="active"><a>'+(i+1)+'</a></li>';
+							} else {
+								strs_pages += '<li><a href="javascript:search('+(i + 1)+')">'+(i + 1)+'</a></li>';
+							}
+						}
+						
+						strs_pages += '<li class="next"><a href="javascript:search('+(pages + 1)+')">';
+						strs_pages += '<i class="ace-icon fa fa-angle-double-right"></i>';
+						strs_pages += '</a></li>';
+						strs_pages += '</ul>';
+						
+						//console.log(strs_head);
+						//console.log(strs_body);
+						//console.log(strs_pages);
+						//console.log(data.pages);
+						$("#sample-table-2 thead").html(strs_head);
+						$("#sample-table-2 tbody").html(strs_body);
+						$(".modal-footer").html(strs_pages);
+						$(".modal-footer").show();
+					}
+				});
+			}
+		</script>
+	</body>
+</html>
